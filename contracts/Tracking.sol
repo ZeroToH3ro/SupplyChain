@@ -193,6 +193,5 @@ contract Tracking {
     {
         return typeShipments;
     }
-
     
 }

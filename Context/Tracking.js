@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 
 //INTERNAL IMPORT
 import tracking from "./Tracking.json";
-const ContractAddress = "0x84F7DAE20121d2d06f74c3e506A6F9D403A5E14d";
+const ContractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
 const ContractAbi = tracking.abi;
 
 //FETCHING SMART CONTRACT
@@ -64,7 +64,7 @@ export const TrackingProvider = ({ children }) => {
 
             return allShipments;
         } catch (error) {
-            console.log("error", error);
+            console.log("error shipment", error);
         }
     }
 
@@ -200,12 +200,12 @@ export const TrackingProvider = ({ children }) => {
             if (!window.ethereum) return "Install Metamask";
 
             const accounts = await window.ethereum.request({
-                methods: "eth_accounts"
+                method: "eth_requestAccounts"
             });
 
             setCurrentUser(accounts[0]);
         } catch (error) {
-            console.log("error", error);
+            console.log("error connect wallet", error);
         }
     }
 
