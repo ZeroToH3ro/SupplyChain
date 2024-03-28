@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract Tracking {
@@ -61,6 +62,10 @@ contract Tracking {
         shipmentCount = 0;
     }
 
+    receive() external payable {}
+
+    // * fallback function
+    fallback() external payable {}
     function createShipment(
         address _receiver,
         uint256 _pickupTime,
@@ -115,7 +120,7 @@ contract Tracking {
         require(shipment.receiver == _receiver, "Invaliad receiver");
         require(
             shipment.status == ShipmentStatus.PENDING,
-            "Shipment alreaddy in transit"
+            "Shipment already in transit"
         );
 
         shipment.status = ShipmentStatus.IN_TRANSIT;
@@ -134,8 +139,8 @@ contract Tracking {
 
         require(shipment.receiver == _receiver, "Invaliad receiver");
         require(
-            shipment.status == ShipmentStatus.PENDING,
-            "Shipment alreaddy in transit"
+            shipment.status == ShipmentStatus.IN_TRANSIT,
+            "Shipment already in transit"
         );
         require(!shipment.isPaid, "Shipment already paid");
 
@@ -193,5 +198,5 @@ contract Tracking {
     {
         return typeShipments;
     }
-    
+
 }

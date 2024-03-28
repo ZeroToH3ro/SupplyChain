@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { TrackingContext } from "../Context/Tracking";
+import { TrackingContext } from "../Context/Tracking.js";
 import { Nav1, Nav2, Nav3 } from "../Components/index"
 
 export default () => {

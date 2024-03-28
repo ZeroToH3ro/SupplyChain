@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import Web3Modal from "web3modal";
-import { ethers } from "ethers";
+import {ethers} from "ethers";
 
 //INTERNAL IMPORT
 import tracking from "./Tracking.json";
-const ContractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+
+const ContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 const ContractAbi = tracking.abi;
 
 //FETCHING SMART CONTRACT
 const fetchContract = (signerOrProvider) =>
     new ethers.Contract(ContractAddress, ContractAbi, signerOrProvider);
 
-export const TrackingContext = React.createContext();;
+export const TrackingContext = React.createContext();
 
 export const TrackingProvider = ({ children }) => {
     //STATE VARIABLE
@@ -46,12 +47,17 @@ export const TrackingProvider = ({ children }) => {
 
     const getAllShipment = async () => {
         try {
-            //TODO: what is JsonRpcProvider ?
+            // TODO: what is JsonRpcProvider ?
+            // JsonRpcProvider is a class provided by ethers.js, a popular JavaScript library for interacting with the Ethereum blockchain.
+            // In the context of ethers.js, a JSON-RPC provider is an object that facilitates communication between your application
+            // and an Ethereum node via JSON-RPC (Remote Procedure Call) protocol. JSON-RPC is a stateless,
+            // lightweight remote procedure call (RPC) protocol that uses JSON for encoding request and response data.
             const provider = new ethers.providers.JsonRpcProvider();
             const contract = fetchContract(provider);
 
             const shipments = await contract.getAllTransactions();
-            const allShipments = shipments.map((shipment) => ({
+            console.log("shipments", shipments);
+            return shipments.map((shipment) => ({
                 sender: shipment.sender,
                 receiver: shipment.receiver,
                 price: ethers.utils.formatEther(shipment.price.toString()),
@@ -61,8 +67,6 @@ export const TrackingProvider = ({ children }) => {
                 isPaid: shipment.isPaid,
                 status: shipment.status,
             }));
-
-            return allShipments;
         } catch (error) {
             console.log("error shipment", error);
         }
@@ -103,6 +107,7 @@ export const TrackingProvider = ({ children }) => {
             const transaction = await contract.completeShipment(
                 accounts[0],
                 receiver,
+                index,
                 {
                     gasLimit: 300000,
                 }
@@ -127,9 +132,9 @@ export const TrackingProvider = ({ children }) => {
 
             const provider = new ethers.providers.JsonRpcProvider();
             const contract = fetchContract(provider);
-            const shipment = await contract.getShipment(account[0], index * 1);
+            const shipment = await contract.getShipment(accounts[0], index * 1);
 
-            const SingleShiplent = {
+            return {
                 sender: shipment[0],
                 receiver: shipment[1],
                 pickupTime: shipment[2].toNumber(),
@@ -139,8 +144,6 @@ export const TrackingProvider = ({ children }) => {
                 status: shipment[6],
                 isPaid: shipment[7]
             };
-
-            return SingleShiplent;
         } catch (error) {
             console.log("error", error);
         }
@@ -169,7 +172,6 @@ export const TrackingProvider = ({ children }) => {
 
             shipment.wait();
             console.log("shipment", shipment);
-
         } catch (error) {
             console.log("error", error);
         }
@@ -210,7 +212,7 @@ export const TrackingProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        checkIfWalletConnected();
+        checkIfWalletConnected().then(r => console.log("wallet is connected"));
     }, []);
 
     return (

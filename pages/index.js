@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, use } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 //INTERNAL IMPORT
 import {
@@ -11,7 +11,7 @@ import {
   StartShipment
 } from "../Components/index";
 
-import { TrackingContext } from "../Context/Tracking";
+import { TrackingContext } from "../Context/Tracking.js";
 
 const index = () => {
   const {
@@ -30,16 +30,16 @@ const index = () => {
   const [completeModal, setCompleteModal] = useState(false);
   const [getModel, setGetModel] = useState(false);
   //DATA STATE VARIABLE
-  const [allShipmentsdata, setallShipmentsdata] = useState();
+  const [allShipmentsData, setAllShipmentsData] = useState();
 
   useEffect(() => {
     const getCampaignsData = getAllShipment();
-
+    console.log("getCampaignsData", getCampaignsData);
     return async () => {
       const allData = await getCampaignsData;
-      setallShipmentsdata(allData);
+        setAllShipmentsData(allData);
     }
-  })
+  }, []);
 
   return (
     <>
@@ -51,7 +51,7 @@ const index = () => {
       />
       <Table
         setCreateShipmentModel={setCreateShipmentModel}
-        allShipmentsdata={allShipmentsdata}
+        allShipmentsData={allShipmentsData}
       />
       <Form
         createShipmentModel={createShipmentModel}
