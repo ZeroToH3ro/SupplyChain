@@ -21,12 +21,12 @@ export default ({
     {
       avatar: image.userProfile,
     },
-    {
-      avatar: image.shipCount,
-    },
-    {
-      avatar: image.send,
-    },
+    // {
+    //   avatar: image.shipCount,
+    // },
+    // {
+    //   avatar: image.send,
+    // },
   ];
 
   const openModelBox = (text) => {

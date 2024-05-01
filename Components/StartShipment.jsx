@@ -69,7 +69,7 @@ export default ({startModal, setStartModal, startShipment}) => {
                   text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700
                   rounded-lg ring-offset-2 ring-indigo-600 focus:ring-2"
                 >
-                  Get details
+                  Start shipping
                 </button>
               </form>
             </div>

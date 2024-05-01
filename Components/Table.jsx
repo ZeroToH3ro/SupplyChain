@@ -79,7 +79,7 @@ export default ({ setCreateShipmentModel, allShipmentsData }) => {
                     {shipment.isPaid ? "Completed" : "Not Completed"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {shipment.status === 0 ? "Pending" : shipment.status === 1 ? "IN_TRANSIT" : "Delivered"}
+                    {shipment.status === 0 ? "Pending" : shipment.status === 1 ? "IN TRANSIT" : "Delivered"}
                   </td>
                 </tr>
               ))}
